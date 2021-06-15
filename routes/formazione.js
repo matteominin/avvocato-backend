@@ -28,10 +28,15 @@ router.get('/:number', (req, res) => {
 })
 
 router.post('/add', (req, res) => {
-    let newCorso = new corsi(req.body)
-    newCorso.save()
-        .then(res.json('Corso caricato'))
-        .catch(err => res.status(400).json('Error: ' + err))
+    if(req.body.pass === process.env.pass){
+        let newCorso = new corsi(req.body)
+        newCorso.save()
+            .then(res.json('Corso caricato'))
+            .catch(err => res.status(400).json('Error: ' + err))
+    }else{
+        res.status(400).json('Autenticati per continuare')
+    }
+    
 })
 
 
